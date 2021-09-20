@@ -15,6 +15,11 @@ const Shop = sequelize.define("shop",{
   location: {
     type: Sequelize.STRING,
     allowNull: false
+  },
+  isActive: {
+    type: Sequelize.BOOLEAN,
+    allowNull: true,
+    defaultValue: true
   }
 });
 

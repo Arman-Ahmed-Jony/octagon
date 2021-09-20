@@ -1,22 +1,23 @@
-const Shop = require("./model/Shop");
+const Shop = require("../model/Shop");
 
 exports.create = (shop) => Shop.create(shop);
 exports.update = (shop) => {
   if (!shop.id) {
     throw new Error("id is required");
   }
-  Shop.update(shop, {
+  return Shop.update(shop, {
     where: {
       id: shop.id,
     },
   });
 };
 exports.delete = (id) =>
-  Shop.distroy({
+  Shop.destroy({
     where: {
       id,
     },
   });
+exports.softDelete= id => this.update({id, isActive: false})
 exports.findAll = () => Shop.findAll();
 exports.findById = (id) =>
   Shop.findOne({
