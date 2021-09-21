@@ -1,0 +1,15 @@
+@hostname = localhost:5000
+@protocol = http
+@baseURL = {{protocol}}://{{hostname}}
+
+# prouduct apis
+
+GET {{baseURL}}/products HTTP/1.1
+###
+POST {{baseURL}}/products HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "7up",
+    "description": "changed description"
+}

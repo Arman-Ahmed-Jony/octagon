@@ -11,11 +11,10 @@ Product.belongsToMany(Order, { through: "ProductOrder" });
 Order.belongsToMany(Product, { through: "ProductOrder" });
 Product.hasOne(ProductDetails);
 // Shop.hasMany(Transaction);
-Transaction.belongsTo(Shop)
-Transaction.belongsTo(User)
-sequelize
-  .sync({ force: true })
-module.exports = sequelize
+Transaction.belongsTo(Shop);
+Transaction.belongsTo(User);
+sequelize.sync();
+module.exports = sequelize;
 //   .then((result) => {
 //     console.log("product created");
 //     return Product.create({ name: "mengo juice" });

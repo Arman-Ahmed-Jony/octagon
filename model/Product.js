@@ -15,6 +15,11 @@ const Product = sequelize.define("product",{
   description: {
     type: Sequelize.TEXT,
     allowNull: true
+  },
+  isActive: {
+    type: Sequelize.BOOLEAN,
+    allowNull: true,
+    defaultValue: true
   }
 });
 
