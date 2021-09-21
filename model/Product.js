@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 const sequelize = require('../util/database')
 
-const Shop = sequelize.define("shop",{
+const Product = sequelize.define("product",{
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
@@ -12,15 +12,10 @@ const Shop = sequelize.define("shop",{
     type: Sequelize.STRING,
     allowNull: false
   },
-  location: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
-  isActive: {
-    type: Sequelize.BOOLEAN,
-    allowNull: true,
-    defaultValue: true
+  description: {
+    type: Sequelize.TEXT,
+    allowNull: true
   }
 });
 
-module.exports = Shop
+module.exports = Product
