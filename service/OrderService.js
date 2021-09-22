@@ -1,10 +1,10 @@
 const Order = require("../model/Order");
 
-exports.create = (Order) => Order.create(Order);
-exports.update = (Order) => {
-  return Order.update(Order, {
+exports.create = (order) => Order.create(order);
+exports.update = (order) => {
+  return Order.update(order, {
     where: {
-      id: Order.id,
+      id: order.id,
     },
   });
 };

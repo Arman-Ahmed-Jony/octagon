@@ -13,7 +13,7 @@ Product.hasOne(ProductDetails);
 // Shop.hasMany(Transaction);
 Transaction.belongsTo(Shop);
 Transaction.belongsTo(User);
-sequelize.sync();
+sequelize.sync({ alter: true });
 module.exports = sequelize;
 //   .then((result) => {
 //     console.log("product created");

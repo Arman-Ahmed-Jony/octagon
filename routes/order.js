@@ -22,10 +22,7 @@ router.get(
 router.post(
   "/",
   (req, res, next) => {
-    OrderService.create({
-      name: req.body.name,
-      description: req.body.description,
-    })
+    OrderService.create(req.body)
       .then((result) => {
         req.body = result;
       })

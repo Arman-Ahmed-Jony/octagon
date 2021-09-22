@@ -1,12 +1,12 @@
-const Sequelize = require('sequelize')
-const sequelize = require('../util/database')
+const Sequelize = require("sequelize");
+const sequelize = require("../util/database");
 
-const Order = sequelize.define("order",{
+const Order = sequelize.define("order", {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     allowNull: false,
-    primaryKey: true
+    primaryKey: true,
   },
   // product: {
   //   type: Sequelize.STRING,
@@ -18,8 +18,18 @@ const Order = sequelize.define("order",{
   // }
   payment: {
     type: Sequelize.INTEGER,
-    allowNull: true
-  }
+    allowNull: true,
+  },
+  isActive: {
+    type: Sequelize.BOOLEAN,
+    allowNull: true,
+    defaultValue: true,
+  },
+  isDelivered: {
+    type: Sequelize.BOOLEAN,
+    allowNull: true,
+    defaultValue: false,
+  },
 });
 
-module.exports = Order
+module.exports = Order;
