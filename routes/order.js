@@ -38,7 +38,7 @@ router.post(
 router.patch(
   "/:id",
   (req, res, next) => {
-    OrderService.update({id: req.params.id,...req.body})
+    OrderService.update({ id: req.params.id, ...req.body })
       .then((result) => {})
       .catch((err) => {
         req.body = err;
@@ -54,14 +54,15 @@ router.delete(
   (req, res, next) => {
     OrderService.softDelete(req.params.id)
       .then((result) => {
-        req.body = result
-      }).catch((err) => {
-        console.log('err called', err);
-        req.body = err
-        req.responseStatus = 500
-      }).finally(() => next());
+        req.body = result;
+      })
+      .catch((err) => {
+        req.body = err;
+        req.responseStatus = 500;
+      })
+      .finally(() => next());
   },
   responseBeautifier
-)
+);
 
 module.exports = router;
