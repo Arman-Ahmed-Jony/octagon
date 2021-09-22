@@ -3,6 +3,7 @@ const subscribesRoute = require("./subscribers");
 const usersRoute = require("./users");
 const productRoute = require("./product");
 const orderRoute = require("./order");
+const shopRoute = require("./shop")
 
 const routes = [
   {
@@ -18,6 +19,10 @@ const routes = [
   {
     path: "/orders",
     component: orderRoute,
+  },
+  {
+    path: "/shops",
+    component: shopRoute,
   },
 ];
 

@@ -46,3 +46,27 @@ Content-Type: application/json
 ###
 DELETE {{baseURL}}/orders/1 HTTP/1.1
 Content-Type: application/json
+
+# shop apis
+
+###
+GET {{baseURL}}/shops HTTP/1.1
+###
+POST {{baseURL}}/shops HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "bura kaka"
+}
+
+###
+PATCH {{baseURL}}/shops/1 HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "ershad "
+}
+
+###
+DELETE {{baseURL}}/shops/1 HTTP/1.1
+Content-Type: application/json
