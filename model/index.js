@@ -2,18 +2,24 @@ const sequelize = require("../util/database");
 const Shop = require("./Shop");
 const Order = require("./Order");
 const Product = require("./Product");
+const ProductOrder = require("./ProductOrder");
 const ProductDetails = require("./ProductDetails");
 const Transaction = require("./Transaction");
 const User = require("./User");
-
+// const forceSync = async () => {
+//   await sequelize.query('SET FOREIGN_KEY_CHECKS = 0');
+//   await sequelize.sync({ force: true });
+//   await sequelize.query('SET FOREIGN_KEY_CHECKS = 1'); // setting the flag back for security
+// };
+Product.belongsToMany(Order, { through: ProductOrder });
+Order.belongsToMany(Product, { through: ProductOrder });
 Shop.hasMany(Order);
-Product.belongsToMany(Order, { through: "ProductOrder" });
-Order.belongsToMany(Product, { through: "ProductOrder" });
 Product.hasOne(ProductDetails);
 // Shop.hasMany(Transaction);
 Transaction.belongsTo(Shop);
 Transaction.belongsTo(User);
-sequelize.sync();
+// forceSync()
+sequelize.sync({ alter: true });
 module.exports = sequelize;
 //   .then((result) => {
 //     console.log("product created");

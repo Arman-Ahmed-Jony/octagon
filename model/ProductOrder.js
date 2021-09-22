@@ -6,26 +6,26 @@
                                         in the index file
  */
 
-const Sequelize = require('sequelize')
-const sequelize = require('../util/database')
-const Order = require("./Order")
-const Product = require('./Product')
+const Sequelize = require("sequelize");
+const sequelize = require("../util/database");
+const Order = require("./Order");
+const Product = require("./Product");
 
-const productOrder = sequelize.define("productOrder",{
-  ProductId: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: Order, // 'Movies' would also work
-      key: 'id'
-    }
+const productOrder = sequelize.define("productOrder", {
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    allowNull: false,
+    primaryKey: true,
   },
-  OrderId: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: Product, // 'Actors' would also work
-      key: 'id'
-    }
-  }
+  unitPrice: {
+    type: Sequelize.INTEGER,
+    allowNull: true,
+  },
+  quantity: {
+    type: Sequelize.INTEGER,
+    allowNull: true,
+  },
 });
 
-module.exports = productOrder
+module.exports = productOrder;

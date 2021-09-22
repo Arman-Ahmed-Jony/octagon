@@ -10,7 +10,7 @@ POST {{baseURL}}/products HTTP/1.1
 Content-Type: application/json
 
 {
-    "name": "7up",
+    "name": "coke1234",
     "description": "changed description"
 }
 ###
@@ -56,17 +56,42 @@ POST {{baseURL}}/shops HTTP/1.1
 Content-Type: application/json
 
 {
-    "name": "bura kaka"
+    "name": "ershad"
 }
 
 ###
-PATCH {{baseURL}}/shops/1 HTTP/1.1
+PATCH {{baseURL}}/shops/2 HTTP/1.1
 Content-Type: application/json
 
 {
-    "name": "ershad "
+    "name": "ershad vai"
 }
 
 ###
 DELETE {{baseURL}}/shops/1 HTTP/1.1
 Content-Type: application/json
+
+###
+POST {{baseURL}}/shops/1/order HTTP/1.1
+Content-Type: application/json
+
+{
+    "payment": 42,
+    "products": [
+        {
+            "id": 1,
+            "unitPrice": 550,
+            "quantity": 12
+        },
+        {
+            "id": 2,
+            "unitPrice": 630,
+            "quantity": 12
+        },
+        {
+            "id": 3,
+            "unitPrice": 410,
+            "quantity": 12
+        }
+    ]
+}

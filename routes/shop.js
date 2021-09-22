@@ -2,6 +2,7 @@ const express = require("express");
 const responseBeautifier = require("../middleware/responseBeautifier");
 const router = express.Router();
 const ShopService = require("../service/ShopService");
+const ProductService = require("../service/ProductService");
 
 router.get(
   "/",
@@ -56,6 +57,40 @@ router.delete(
       .then((result) => {
         req.body = result;
       })
+      .catch((err) => {
+        req.body = err;
+        req.responseStatus = 500;
+      })
+      .finally(() => next());
+  },
+  responseBeautifier
+);
+
+router.post(
+  "/:id/order",
+  (req, res, next) => {
+    ShopService.findById(req.params.id)
+      .then((shop) => {
+        return shop.createOrder(req.body);
+      })
+      .then((order) => {
+        return Promise.all(
+          req.body.products.map((product) => {
+            return ProductService.findById(product.id)
+              .then((productInstence) => {
+                console.log(product);
+                return order.addProduct(productInstence, {
+                  through: {
+                    unitPrice: product.unitPrice,
+                    quantity: product.quantity,
+                  },
+                });
+              })
+              .catch((err) => {});
+          })
+        );
+      })
+      .then((val) => {})
       .catch((err) => {
         req.body = err;
         req.responseStatus = 500;

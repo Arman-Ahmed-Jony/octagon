@@ -59,7 +59,6 @@ router.delete(
       .then((result) => {
         req.body = result
       }).catch((err) => {
-        console.log('err called', err);
         req.body = err
         req.responseStatus = 500
       }).finally(() => next());
