@@ -1,15 +1,19 @@
 const express = require('express')
+const responseBeautifier = require('../middleware/responseBeautifier')
 
 const router = express.Router()
 // const db = require('../database/mysql')
 const ProductService = require('../service/ProductService')
-router.get('/', (req,res) => {
+router.get('/', (req,res, next) => {
   ProductService.findAll().then((result) => {
-    res.json(result)
+    req.body = result
+    next()
   }).catch((err) => {
-    res.status(500).json(err)
+    req.body = err
+    req.responseStatus = 500
+    next()
   });
-})
+},responseBeautifier)
 router.post('/', (req,res) => {
   ProductService.create({
     name: req.body.name,
