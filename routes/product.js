@@ -1,36 +1,56 @@
-const express = require('express')
-const responseBeautifier = require('../middleware/responseBeautifier')
+const express = require("express");
+const responseBeautifier = require("../middleware/responseBeautifier");
+const router = express.Router();
+const ProductService = require("../service/ProductService");
 
-const router = express.Router()
-// const db = require('../database/mysql')
-const ProductService = require('../service/ProductService')
-router.get('/', (req,res, next) => {
-  ProductService.findAll().then((result) => {
-    req.body = result
-    next()
-  }).catch((err) => {
-    req.body = err
-    req.responseStatus = 500
-    next()
-  });
-},responseBeautifier)
-router.post('/', (req,res) => {
-  ProductService.create({
-    name: req.body.name,
-    description: req.body.description
-  }).then((result) => {
-    res.json(result)
-  }).catch((err) => {
-    res.status(500).json(err)
-  });
-})
-router.patch('/', (req, res) => {
-  ProductService.update(req.body).then((result) => {
-    res.json(result)
-  }).catch((err) => {
-    res.status(500).json(err)
-  });
-})
+router.get(
+  "/",
+  (req, res, next) => {
+    ProductService.findAll()
+      .then((result) => {
+        req.body = result;
+      })
+      .catch((err) => {
+        req.body = err;
+        req.responseStatus = 500;
+      })
+      .finally(() => next());
+  },
+  responseBeautifier
+);
+
+router.post(
+  "/",
+  (req, res, next) => {
+    ProductService.create({
+      name: req.body.name,
+      description: req.body.description,
+    })
+      .then((result) => {
+        req.body = result;
+      })
+      .catch((err) => {
+        req.body = err;
+        req.responseStatus = 500;
+      })
+      .finally(() => next());
+  },
+  responseBeautifier
+);
+
+router.patch(
+  "/:id",
+  (req, res, next) => {
+    ProductService.update(req.body, req.params.id)
+      .then((result) => {})
+      .catch((err) => {
+        req.body = err;
+        req.responseStatus = 500;
+      })
+      .finally(() => next());
+  },
+  responseBeautifier
+);
 
 // router.get('/', (req, res) => {
 //   db.models.product
@@ -95,4 +115,4 @@ router.patch('/', (req, res) => {
 //     .catch((err) => res.status(500).json(err))
 // })
 
-module.exports = router
+module.exports = router;

@@ -1,13 +1,10 @@
 const Product = require("../model/Product");
 
 exports.create = (product) => Product.create(product);
-exports.update = (product) => {
-  if (!product.id) {
-    return Promise.reject('id not found');
-  }
+exports.update = (product, id) => {
   return Product.update(product, {
     where: {
-      id: product.id,
+      id,
     },
   });
 };
@@ -17,7 +14,7 @@ exports.delete = (id) =>
       id,
     },
   });
-exports.softDelete= id => this.update({id, isActive: false})
+exports.softDelete = (id) => this.update({ id, isActive: false });
 exports.findAll = () => Product.findAll();
 exports.findById = (id) =>
   Product.findOne({

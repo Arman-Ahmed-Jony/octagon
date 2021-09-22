@@ -14,10 +14,10 @@ Content-Type: application/json
     "description": "changed description"
 }
 ###
-PATCH {{baseURL}}/products HTTP/1.1
+PATCH {{baseURL}}/products/1 HTTP/1.1
 Content-Type: application/json
 
 {
-    "name": "7up",
+    "name": "7upqdqwd",
     "description": "changed description"
 }
