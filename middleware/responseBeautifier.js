@@ -1,5 +1,4 @@
 module.exports = function(req, res, next) {
-  console.log("meddle ware called");
   const message = {};
   message.body = req.body;
   message.success = true;

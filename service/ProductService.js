@@ -1,10 +1,10 @@
 const Product = require("../model/Product");
 
 exports.create = (product) => Product.create(product);
-exports.update = (product, id) => {
+exports.update = (product) => {
   return Product.update(product, {
     where: {
-      id,
+      id: product.id,
     },
   });
 };

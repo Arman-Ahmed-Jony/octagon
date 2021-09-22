@@ -41,7 +41,7 @@ router.post(
 router.patch(
   "/:id",
   (req, res, next) => {
-    ProductService.update(req.body, req.params.id)
+    ProductService.update({id: req.params.id,...req.body})
       .then((result) => {})
       .catch((err) => {
         req.body = err;
@@ -51,6 +51,21 @@ router.patch(
   },
   responseBeautifier
 );
+
+router.delete(
+  "/:id",
+  (req, res, next) => {
+    ProductService.softDelete(req.params.id)
+      .then((result) => {
+        req.body = result
+      }).catch((err) => {
+        console.log('err called', err);
+        req.body = err
+        req.responseStatus = 500
+      }).finally(() => next());
+  },
+  responseBeautifier
+)
 
 // router.get('/', (req, res) => {
 //   db.models.product
