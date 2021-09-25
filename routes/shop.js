@@ -78,7 +78,6 @@ router.post(
           req.body.products.map((product) => {
             return ProductService.findById(product.id)
               .then((productInstence) => {
-                console.log(product);
                 return order.addProduct(productInstence, {
                   through: {
                     unitPrice: product.unitPrice,
