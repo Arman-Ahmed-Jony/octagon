@@ -8,14 +8,6 @@ const Order = sequelize.define("order", {
     allowNull: false,
     primaryKey: true,
   },
-  // product: {
-  //   type: Sequelize.STRING,
-  //   allowNull: false
-  // },
-  // price: {
-  //   type: Sequelize.INTEGER,
-  //   allowNull: false
-  // }
   payment: {
     type: Sequelize.INTEGER,
     allowNull: true,
@@ -29,6 +21,10 @@ const Order = sequelize.define("order", {
     type: Sequelize.BOOLEAN,
     allowNull: true,
     defaultValue: false,
+  },
+  comments: {
+    type: Sequelize.STRING,
+    allowNull: true,
   },
 });
 

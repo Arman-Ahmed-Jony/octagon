@@ -8,13 +8,13 @@ const Transaction = sequelize.define("transaction",{
     allowNull: false,
     primaryKey: true
   },
-  given: {
+  amount: {
     type: Sequelize.INTEGER,
-    allowNull: true
+    allowNull: false
   },
-  taken: {
+  type: {
     type: Sequelize.INTEGER,
-    allowNull: true
+    allowNull: false
   }
 });
 
