@@ -3,7 +3,7 @@ const responseBeautifier = require("../middleware/responseBeautifier");
 const router = express.Router();
 const ShopService = require("../service/ShopService");
 const ProductService = require("../service/ProductService");
-
+const OrderService = require("../service/OrderService");
 router.get(
   "/",
   (req, res, next) => {
@@ -66,13 +66,25 @@ router.delete(
   responseBeautifier
 );
 
+router.get(
+  "/:id/order",
+  (req, res, next) => {
+    OrderService.findAll({ include: [{ all: true }] })
+      .then((result) => {
+        req.body = result;
+      })
+      .catch((err) => {
+        req.body = err;
+        req.responseStatus = 500;
+      })
+      .finally(() => next());
+  },
+  responseBeautifier
+);
 router.post(
   "/:id/order",
   (req, res, next) => {
-    ShopService.findById(req.params.id)
-      .then((shop) => {
-        return shop.createOrder(req.body);
-      })
+    OrderService.create({ ...req.body, shopId: req.params.id })
       .then((order) => {
         return Promise.all(
           req.body.products.map((product) => {

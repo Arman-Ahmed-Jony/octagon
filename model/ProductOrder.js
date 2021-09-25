@@ -21,10 +21,12 @@ const productOrder = sequelize.define("productOrder", {
   unitPrice: {
     type: Sequelize.INTEGER,
     allowNull: true,
+    defaultValue: 0
   },
   quantity: {
     type: Sequelize.INTEGER,
     allowNull: true,
+    defaultValue: 0
   },
 });
 

@@ -15,7 +15,7 @@ exports.delete = (id) =>
     },
   });
 exports.softDelete = (id) => this.update({ id, isActive: false });
-exports.findAll = () => Order.findAll();
+exports.findAll = (opt = {}) => Order.findAll(opt);
 exports.findById = (id) =>
   Order.findOne({
     where: {

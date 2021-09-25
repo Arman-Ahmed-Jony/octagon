@@ -6,9 +6,9 @@ const OrderService = require("../service/OrderService");
 router.get(
   "/",
   (req, res, next) => {
-    OrderService.findAll()
+    OrderService.findAll({ include: [{ all: true }] })
       .then((result) => {
-        req.body = result;
+        req.body = result
       })
       .catch((err) => {
         req.body = err;
