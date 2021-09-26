@@ -10,7 +10,9 @@ const User = require("./User");
 Product.belongsToMany(Order, { through: ProductOrder });
 Order.belongsToMany(Product, { through: ProductOrder });
 Shop.hasMany(Order);
+Order.belongsTo(Shop)
 Product.hasOne(ProductDetails);
+ProductDetails.belongsTo(Product)
 Transaction.belongsTo(Shop);
 Transaction.belongsTo(User);
 sequelize.sync({ alter: true });
