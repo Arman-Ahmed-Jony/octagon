@@ -1,4 +1,4 @@
 module.exports = {
-  DEBIT: "debit",
-  CREDIT: "credit"
+  DEBIT: "DEBIT",
+  CREDIT: "CREDIT"
 }

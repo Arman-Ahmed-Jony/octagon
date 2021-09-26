@@ -4,6 +4,7 @@ const router = express.Router();
 const ShopService = require("../service/ShopService");
 const ProductService = require("../service/ProductService");
 const OrderService = require("../service/OrderService");
+const Shop = require("../model/Shop");
 router.get(
   "/",
   (req, res, next) => {
@@ -84,7 +85,10 @@ router.get(
 router.post(
   "/:id/order",
   (req, res, next) => {
-    OrderService.create({ ...req.body, shopId: req.params.id })
+    OrderService.create(
+      { ...req.body, shop: { id: req.params.id } },
+      { include: [Shop] }
+    )
       .then((order) => {
         return Promise.all(
           req.body.products.map((product) => {

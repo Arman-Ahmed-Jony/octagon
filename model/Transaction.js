@@ -13,8 +13,8 @@ const Transaction = sequelize.define("transaction",{
     allowNull: false
   },
   type: {
-    type: Sequelize.INTEGER,
-    allowNull: false
+    type: Sequelize.ENUM('CREDIT', 'DEBIT'),
+    allowNull: false,
   }
 });
 
