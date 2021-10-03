@@ -82,12 +82,13 @@ router.get(
   },
   responseBeautifier
 );
+
 router.post(
   "/:id/order",
   (req, res, next) => {
     OrderService.create(
-      { ...req.body, shop: { id: req.params.id } },
-      { include: [Shop] }
+      { ...req.body, shopId: req.params.id }
+      // { include: [Shop] }
     )
       .then((order) => {
         return Promise.all(
@@ -115,4 +116,31 @@ router.post(
   responseBeautifier
 );
 
+router.patch(
+  "/:shopId/order/:orderId",
+  (req, res, next) => {
+    OrderService.findById(req.params.orderId)
+      .then((order) => {
+        // req.body.products
+        req.body.products.forEach(product => {
+          ProductService.findById(product.id).then((productInstence) => {
+            order.setProducts(productInstence)
+          })
+        });
+        // order.setProducts(req.body.products).then(() => {
+        //   req.body = order;
+        // })
+        // order.getProducts().then((result) => {
+        //   console.log(result);
+        // });
+        // console.log('test');
+      })
+      .catch((err) => {
+        req.body = err;
+        req.responseStatus = 500;
+      })
+      .finally(() => next());
+  },
+  responseBeautifier
+);
 module.exports = router;

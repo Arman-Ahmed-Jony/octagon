@@ -12,7 +12,7 @@ Order.belongsToMany(Product, { through: ProductOrder });
 Shop.hasMany(Order);
 Order.belongsTo(Shop)
 Product.hasOne(ProductDetails);
-ProductDetails.belongsTo(Product)
+ProductDetails.belongsTo(Product);
 Transaction.belongsTo(Shop);
 Transaction.belongsTo(User);
 sequelize.sync({ alter: true });

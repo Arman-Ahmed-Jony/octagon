@@ -5,4 +5,10 @@ const sequelize = new Sequelize('node_workshop', 'root', '', {
   dialect: 'mysql'
 });
 
+// const sequelize = new Sequelize('jobapps_prod', 'admin', 'T$unaguDB2520231', {
+//   port: 3306,
+//   host: 'tsunagu-db-server.crryxxnsjkmx.us-east-2.rds.amazonaws.com',
+//   dialect: 'mysql'
+// });
+
 module.exports = sequelize
