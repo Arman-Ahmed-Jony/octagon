@@ -18,12 +18,16 @@ const User = sequelize.define("user",{
   },
   password: {
     type: Sequelize.STRING,
-    allowNull: true
+    allowNull: false
   },
   email: {
     type: Sequelize.STRING,
     allowNull: false,
     unique: true
+  },
+  role: {
+    type: Sequelize.ENUM('SUPER_ADMIN', 'ADMIN', 'USER'),
+    allowNull: true,
   }
 });
 

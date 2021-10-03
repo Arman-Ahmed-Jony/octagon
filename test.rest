@@ -117,3 +117,13 @@ Content-Type: application/json
         }
     ]
 }
+
+
+###
+POST {{baseURL}}/users/register HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "armanahmedjony@gmail.com",
+    "password": "test"
+}
