@@ -124,6 +124,17 @@ POST {{baseURL}}/users/register HTTP/1.1
 Content-Type: application/json
 
 {
-    "email": "armanahmedjony@gmail.com",
+    "email": "arman@gmail.com",
+    "password": "test",
+    "firstName": "arman",
+    "lastName": "ahmed"
+}
+
+###
+POST {{baseURL}}/users/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "latte@gmail.com",
     "password": "test"
 }
