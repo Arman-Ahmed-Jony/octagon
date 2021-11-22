@@ -26,6 +26,9 @@ const Transaction = sequelize.define("transaction",{
     allowNull: true,
     defaultValue: null
   }
+},
+{
+  paranoid: true
 });
 
 module.exports = Transaction
