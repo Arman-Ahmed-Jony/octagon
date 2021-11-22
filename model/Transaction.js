@@ -15,6 +15,16 @@ const Transaction = sequelize.define("transaction",{
   type: {
     type: Sequelize.ENUM('CREDIT', 'DEBIT'),
     allowNull: false,
+  },
+  entityType: {
+    type: Sequelize.STRING,
+    allowNull: true,
+    defaultValue: null
+  },
+  entityId: {
+    type: Sequelize.INTEGER,
+    allowNull: true,
+    defaultValue: null
   }
 });
 
