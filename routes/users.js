@@ -38,27 +38,31 @@ router.post("/register", async (req, res) => {
 
 router.post(
   "/login",
-  async (req, res) => {
+  async (req, res, next) => {
     try {
       const user = await UserService.findByEmail(req.body.email);
-      console.log("test", user);
       if (!user) {
-        res.status(401).json({ message: "Invalid email or password" });
+        req.responseStatus = 401;
+        throw new Error("Invalid email or password");
       }
       const validPassword = await bcrypt.compare(
         req.body.password,
         user.password
       );
       if (!validPassword) {
-        res.status(401).json({ message: "Invalid email or password" });
+        req.responseStatus = 401;
+        throw new Error("Invalid email or password");
       }
       const token = authenticationUtil.generateJwtToken(user, "blah");
-      res
-        .status(200)
-        .header("x-auth-token", token)
-        .json(_.pick(user, ["firstName", "lastName", "email"]));
+      req.responseStatus = 200;
+      req.body = _.pick(user, ["firstName", "lastName", "email"])
+      req.token = token
+      // res
+      //   .status(200)
+      //   .header("x-auth-token", token)
+      //   .json(_.pick(user, ["firstName", "lastName", "email"]));
     } catch (error) {
-      req.body = error;
+      req.body = Object.getOwnPropertyDescriptors(error);
       req.responseStatus = 500;
     } finally {
       next();

@@ -16,9 +16,9 @@ exports.delete = (id) =>
   });
 exports.softDelete = (id) => this.update({ id, isActive: false });
 exports.findAll = (opt = {}) => Order.findAll(opt);
-exports.findById = (id) =>
+exports.findById = (id, opt = {}) =>
   Order.findOne({
     where: {
       id,
-    },
+    }, ...opt
   });

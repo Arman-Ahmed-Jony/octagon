@@ -5,6 +5,8 @@ const ShopService = require("../service/ShopService");
 const ProductService = require("../service/ProductService");
 const OrderService = require("../service/OrderService");
 const Shop = require("../model/Shop");
+const Product = require("../model/Product");
+const lodash = require("lodash");
 router.get(
   "/",
   (req, res, next) => {
@@ -116,24 +118,26 @@ router.post(
   responseBeautifier
 );
 
+// TODO 1. add order availability check exception
+// TODO 2. patch api should store data that are comes from client side and update the data in database and return the updated data to client side
 router.patch(
   "/:shopId/order/:orderId",
   (req, res, next) => {
-    OrderService.findById(req.params.orderId)
+    OrderService.findById(req.params.orderId, { include: [Product] })
       .then((order) => {
-        // req.body.products
+        lodash.differenceBy(order.products, req.body.products, "id").forEach( product => {
+          order.removeProduct(product);
+        })
         req.body.products.forEach(product => {
           ProductService.findById(product.id).then((productInstence) => {
-            order.setProducts(productInstence)
+            order.addProducts(productInstence,{
+              through: {
+                unitPrice: product.unitPrice,
+                quantity: product.quantity,
+              },
+            })
           })
         });
-        // order.setProducts(req.body.products).then(() => {
-        //   req.body = order;
-        // })
-        // order.getProducts().then((result) => {
-        //   console.log(result);
-        // });
-        // console.log('test');
       })
       .catch((err) => {
         req.body = err;

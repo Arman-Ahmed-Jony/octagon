@@ -14,7 +14,7 @@ Order.belongsTo(Shop)
 Product.hasOne(ProductDetails);
 ProductDetails.belongsTo(Product);
 Transaction.belongsTo(User);
-sequelize.sync({alter: true});
+sequelize.sync();
 module.exports = sequelize;
 // const forceSync = async () => {
 //   await sequelize.query('SET FOREIGN_KEY_CHECKS = 0');
