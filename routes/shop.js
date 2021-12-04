@@ -150,4 +150,20 @@ router.patch(
   },
   responseBeautifier
 );
+
+router.post(
+  "/:shopId/order/:orderId/delivered",
+  (req, res, next) => {
+    OrderService.update(
+      {  isDelivered: true , id: req.params.orderId}
+    ).then((order) => {
+      req.body = order;
+    }).catch((err) => {
+        req.body = err;
+        req.responseStatus = 500;
+      })
+      .finally(() => next());
+  },
+  responseBeautifier
+);
 module.exports = router;

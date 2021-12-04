@@ -116,6 +116,10 @@ Content-Type: application/json
 
 
 ###
+POST {{baseURL}}/shops/1/order/1/delivered HTTP/1.1
+Content-Type: application/json
+
+###
 POST {{baseURL}}/users/register HTTP/1.1
 Content-Type: application/json
 
