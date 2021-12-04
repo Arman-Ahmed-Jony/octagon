@@ -5,7 +5,7 @@ exports.update = (order) => {
   return Order.update(order, {
     where: {
       id: order.id,
-    },
+    }
   });
 };
 exports.delete = (id) =>
