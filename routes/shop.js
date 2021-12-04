@@ -125,7 +125,9 @@ router.patch(
   (req, res, next) => {
     OrderService.findById(req.params.orderId, { include: [Product] })
       .then((order) => {
+        // update comment of that order
         OrderService.update({comment: req.body.comment, id: req.params.orderId})
+        // remove products from order that are not available in the request body
         lodash.differenceBy(order.products, req.body.products, "id").forEach( product => {
           order.removeProduct(product);
         })

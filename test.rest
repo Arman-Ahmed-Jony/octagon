@@ -79,6 +79,7 @@ POST {{baseURL}}/shops/1/order HTTP/1.1
 Content-Type: application/json
 
 {
+    "comment": "wliefoiwf",
     "products": [
         {
             "id": 1,
@@ -102,12 +103,12 @@ Content-Type: application/json
     "products": [
         {
             "id": 1,
-            "unitPrice": 200,
+            "unitPrice": 11,
             "quantity": 12
         },
         {
             "id": 2,
-            "unitPrice": 200,
+            "unitPrice": 22,
             "quantity": 10
         }
     ]
