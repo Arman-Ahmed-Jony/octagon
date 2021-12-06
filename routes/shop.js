@@ -7,6 +7,9 @@ const OrderService = require("../service/OrderService");
 const Shop = require("../model/Shop");
 const Product = require("../model/Product");
 const lodash = require("lodash");
+const ProductOrder = require("../model/ProductOrder");
+const TransactionTypesEnum = require("../model/tranactionTypesEnum");
+const TransactionService = require("../service/TransactionService");
 router.get(
   "/",
   (req, res, next) => {
@@ -153,16 +156,35 @@ router.patch(
 
 router.post(
   "/:shopId/order/:orderId/delivered",
-  (req, res, next) => {
-    OrderService.update(
-      {  isDelivered: true , id: req.params.orderId}
-    ).then((order) => {
-      req.body = order;
-    }).catch((err) => {
-        req.body = err;
-        req.responseStatus = 500;
+  async (req, res, next) => {
+    try {
+      const order = await OrderService.findById(req.params.orderId)
+      if (order.isDelivered) {
+        throw new Error("Order is already delivered");
+      }
+      OrderService.update(
+        {  isDelivered: true , id: req.params.orderId}
+        ).then(async () => {
+          const orderDetails = await ProductOrder.findAll({ where: { orderId: order.id } });
+          const total = orderDetails.reduce((acc, curr) => {
+            return acc+=curr.quantity * curr.unitPrice;
+          }, 0)
+          // TODO : add user who delivered the order and owner of that initiation of transaction
+          TransactionService.create({
+            amount: total,
+            type: TransactionTypesEnum.CREDIT,
+            entityType: "SHOP",
+            entityId: order.shopId,
+          })
+      }).then((order) => {
+        req.body = order;
       })
-      .finally(() => next());
+    } catch (err) {
+      req.body = Object.getOwnPropertyDescriptors(err);
+      req.responseStatus = 500;
+    }finally {
+      next();
+    }
   },
   responseBeautifier
 );
