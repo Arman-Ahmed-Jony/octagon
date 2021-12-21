@@ -129,20 +129,25 @@ router.patch(
     OrderService.findById(req.params.orderId, { include: [Product] })
       .then((order) => {
         // update comment of that order
-        OrderService.update({comment: req.body.comment, id: req.params.orderId})
+        OrderService.update({
+          comment: req.body.comment,
+          id: req.params.orderId,
+        });
         // remove products from order that are not available in the request body
-        lodash.differenceBy(order.products, req.body.products, "id").forEach( product => {
-          order.removeProduct(product);
-        })
-        req.body.products.forEach(product => {
+        lodash
+          .differenceBy(order.products, req.body.products, "id")
+          .forEach((product) => {
+            order.removeProduct(product);
+          });
+        req.body.products.forEach((product) => {
           ProductService.findById(product.id).then((productInstence) => {
-            order.addProducts(productInstence,{
+            order.addProducts(productInstence, {
               through: {
                 unitPrice: product.unitPrice,
                 quantity: product.quantity,
               },
-            })
-          })
+            });
+          });
         });
       })
       .catch((err) => {
@@ -158,31 +163,42 @@ router.post(
   "/:shopId/order/:orderId/delivered",
   async (req, res, next) => {
     try {
-      const order = await OrderService.findById(req.params.orderId)
+      const order = await OrderService.findById(req.params.orderId);
       if (order.isDelivered) {
         throw new Error("Order is already delivered");
       }
-      OrderService.update(
-        {  isDelivered: true , id: req.params.orderId}
-        ).then(async () => {
-          const orderDetails = await ProductOrder.findAll({ where: { orderId: order.id } });
+      OrderService.update({ isDelivered: true, id: req.params.orderId })
+        .then(async () => {
+          const orderDetails = await ProductOrder.findAll({
+            where: { orderId: order.id },
+            include: {
+              model: Product,
+            },
+          });
+          console.log(orderDetails);
           const total = orderDetails.reduce((acc, curr) => {
-            return acc+=curr.quantity * curr.unitPrice;
-          }, 0)
+            return (acc += curr.quantity * curr.unitPrice);
+          }, 0);
           // TODO : add user who delivered the order and owner of that initiation of transaction
           TransactionService.create({
             amount: total,
             type: TransactionTypesEnum.CREDIT,
             entityType: "SHOP",
             entityId: order.shopId,
-          })
-      }).then((order) => {
-        req.body = order;
-      })
+            description: orderDetails.reduce(
+              (acc, curr) =>
+                (acc += `${curr.quantity} ${curr.product.name} @ ${curr.unitPrice} \n`),
+              ""
+            ),
+          });
+        })
+        .then((order) => {
+          req.body = order;
+        });
     } catch (err) {
       req.body = Object.getOwnPropertyDescriptors(err);
       req.responseStatus = 500;
-    }finally {
+    } finally {
       next();
     }
   },

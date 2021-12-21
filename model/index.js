@@ -8,8 +8,10 @@ const Transaction = require("./Transaction");
 const User = require("./User");
 const PartiesOfTransaction = require("./PartiesOfTransaction");
 
-Product.belongsToMany(Order, { through: ProductOrder });
-Order.belongsToMany(Product, { through: ProductOrder });
+Product.belongsToMany(Order, { through: ProductOrder, foreignKey: "productId" });
+Order.belongsToMany(Product, { through: ProductOrder, foreignKey: "orderId" });
+ProductOrder.belongsTo(Product, { foreignKey: "productId" });
+ProductOrder.belongsTo(Order, { foreignKey: "orderId" });
 Shop.hasMany(Order);
 Order.belongsTo(Shop)
 Product.hasOne(ProductDetails);

@@ -25,6 +25,11 @@ const Transaction = sequelize.define("transaction",{
     type: Sequelize.INTEGER,
     allowNull: true,
     defaultValue: null
+  },
+  description: {
+    type: Sequelize.STRING,
+    allowNull: true,
+    defaultValue: null
   }
 },
 {

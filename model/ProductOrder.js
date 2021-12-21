@@ -28,6 +28,21 @@ const productOrder = sequelize.define("productOrder", {
     allowNull: true,
     defaultValue: 0
   },
+  productId: {
+    type: Sequelize.INTEGER,
+    references: {
+      model: Product,
+      key: Product.id,
+    }
+  },
+  orderId: {
+    type: Sequelize.INTEGER,
+    references: {
+      model: Order,
+      key: Order.id
+    }
+  },
+  
 });
 
 module.exports = productOrder;
