@@ -2,13 +2,25 @@ const express = require("express");
 const responseBeautifier = require("../middleware/responseBeautifier");
 const router = express.Router();
 const OrderService = require("../service/OrderService");
+const { Op } = require("sequelize");
 
 router.get(
   "/",
   (req, res, next) => {
-    OrderService.findAll({ include: [{ all: true }] })
+    console.log(req.query);
+    let offset = (new Number(req.query.page) - 1 || 0) * (new Number(req.query.limit) || 10) || 0;
+    OrderService.findAndCountAll({
+      include: [{ all: true }],
+      limit: parseInt(req.query.limit) || 10,
+      offset: offset,
+      distinct: true,
+      order: [["createdAt", "DESC"]],
+    })
       .then((result) => {
-        req.body = result
+        req.body = {
+          data: result.rows,
+          total: result.count,
+        };
       })
       .catch((err) => {
         req.body = err;

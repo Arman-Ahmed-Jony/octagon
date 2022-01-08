@@ -20,7 +20,8 @@ const Order = sequelize.define("order", {
   },
   comment: {
     type: Sequelize.TEXT,
-    allowNull: true,
+    allowNull: false,
+    defaultValue: '',
   },
 });
 
