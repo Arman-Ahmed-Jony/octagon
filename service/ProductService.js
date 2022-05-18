@@ -20,7 +20,7 @@ exports.softDelete = (id) => Product.destroy({
     id,
   }
 });
-exports.findAll = () => Product.findAll();
+exports.findAll = () => Product.findAll({paranoid: false});
 exports.findById = (id) =>
   Product.findOne({
     where: {
