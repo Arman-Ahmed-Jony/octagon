@@ -6,6 +6,7 @@ exports.update = (shop) => {
     where: {
       id: shop.id,
     },
+    paranoid: false,
   });
 };
 exports.delete = (id) =>
@@ -13,9 +14,14 @@ exports.delete = (id) =>
     where: {
       id,
     },
+    force: true,
   });
-exports.softDelete = (id) => this.update({ id, isActive: false });
-exports.findAll = () => Shop.findAll();
+exports.softDelete = (id) => Shop.destroy({
+  where: {
+    id,
+  }
+});
+exports.findAll = () => Shop.findAll({paranoid: false});
 exports.findById = (id) =>
   Shop.findOne({
     where: {

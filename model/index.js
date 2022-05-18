@@ -17,6 +17,7 @@ Order.belongsTo(Shop)
 Product.hasOne(ProductDetails);
 ProductDetails.belongsTo(Product);
 Transaction.belongsTo(User);
+// alter true, force true
 sequelize.sync({alert: true})
   .then(() => {
     return PartiesOfTransaction.bulkCreate([{
