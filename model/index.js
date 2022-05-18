@@ -35,7 +35,7 @@ sequelize.sync({alert: true})
       label: 'Vendor'
     }])
   }).catch(err => {
-    console.log('data insertion error');
+    console.log('data insertion error', err);
   });
 module.exports = sequelize;
 // const forceSync = async () => {

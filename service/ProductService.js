@@ -13,8 +13,13 @@ exports.delete = (id) =>
     where: {
       id,
     },
+    force: true
   });
-exports.softDelete = (id) => this.update({ id, isActive: false });
+exports.softDelete = (id) => Product.destroy({
+  where: {
+    id,
+  }
+});
 exports.findAll = () => Product.findAll();
 exports.findById = (id) =>
   Product.findOne({

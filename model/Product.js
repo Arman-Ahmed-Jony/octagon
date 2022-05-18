@@ -21,6 +21,8 @@ const Product = sequelize.define("product",{
     allowNull: true,
     defaultValue: true
   }
+}, {
+  paranoid: true,
 });
 
 module.exports = Product
