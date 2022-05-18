@@ -6,6 +6,7 @@ exports.update = (product) => {
     where: {
       id: product.id,
     },
+    paranoid: false
   });
 };
 exports.delete = (id) =>
