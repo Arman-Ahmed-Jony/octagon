@@ -75,19 +75,19 @@ Content-Type: application/json
 ###
 GET {{baseURL}}/shops/1/order HTTP/1.1
 ###
-POST {{baseURL}}/shops/2/order HTTP/1.1
+POST {{baseURL}}/shops/1/order HTTP/1.1
 Content-Type: application/json
 
 {
     "comment": "wliefoiwf",
     "products": [
         {
-            "id": 1,
+            "id": 7,
             "unitPrice": 550,
             "quantity": 12
         },
         {
-            "id": 2,
+            "id": 9,
             "unitPrice": 630,
             "quantity": 12
         }
@@ -95,7 +95,7 @@ Content-Type: application/json
 }
 
 ###
-PATCH {{baseURL}}/shops/1/order/1 HTTP/1.1
+PATCH {{baseURL}}/shops/1/order/2 HTTP/1.1
 Content-Type: application/json
 
 {

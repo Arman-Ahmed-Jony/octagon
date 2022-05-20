@@ -23,6 +23,9 @@ const Order = sequelize.define("order", {
     allowNull: false,
     defaultValue: '',
   },
+},
+{
+  paranoid: true
 });
 
 module.exports = Order;
