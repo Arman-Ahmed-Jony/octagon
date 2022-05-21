@@ -143,3 +143,4 @@ Content-Type: application/json
 
 ###
 GET {{baseURL}}/transactions HTTP/1.1
+Content-Type: application/json

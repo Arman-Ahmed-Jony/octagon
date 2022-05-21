@@ -175,7 +175,6 @@ router.post(
               model: Product,
             },
           });
-          console.log(orderDetails);
           const total = orderDetails.reduce((acc, curr) => {
             return (acc += curr.quantity * curr.unitPrice);
           }, 0);
@@ -185,11 +184,14 @@ router.post(
             type: TransactionTypesEnum.CREDIT,
             entityType: "SHOP",
             entityId: order.shopId,
-            description: orderDetails.reduce(
-              (acc, curr) =>
-                (acc += `${curr.quantity} ${curr.product.name} @ ${curr.unitPrice} \n`),
-              ""
-            ),
+            description: orderDetails
+              .reduce((acc, curr) => {
+                acc.push(
+                  `${curr.quantity} unit ${curr.product.name} @ ${curr.unitPrice} tk`
+                );
+                return acc;
+              }, [])
+              .join(", "),
           });
         })
         .then((order) => {
