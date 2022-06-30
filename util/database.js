@@ -1,8 +1,14 @@
 const Sequelize = require("sequelize")
-
-const sequelize = new Sequelize('vaguecod_wiz', 'vaguecod_borhan', 'alpha_net', {
-  host: 'localhost',
-  dialect: 'mysql'
+console.log(process.env.NODE_ENV)
+const databaseHost = process.env.DATABASE_HOST
+const databaseName = process.env.DATABASE_NAME
+const databaseUser = process.env.DATABASE_USER
+const databasePassword = process.env.DATABASE_PASSWORD
+const databasePort = process.env.DATABASE_PORT
+const databaseDialect = process.env.DATABASE_DIALECT
+const sequelize = new Sequelize(databaseName, databaseUser, databasePassword, {
+  host: databaseHost,
+  dialect: databaseDialect,
 });
 
 // const sequelize = new Sequelize('tmp', 'admin', 'T$unaguDB2520231', {

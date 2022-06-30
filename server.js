@@ -1,3 +1,5 @@
+require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` })
+console.log(process.env.NODE_ENV)
 const sequalize = require("./model")
 const express = require('express')
 const cors = require('cors')
